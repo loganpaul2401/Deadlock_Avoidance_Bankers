@@ -70,6 +70,7 @@ function CheckProcess {
     if [[ ${need[$1,$j]} -gt ${available[$j]} ]]
     then
       f=1
+      break
     fi
   done
   return $f
