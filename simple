@@ -1,0 +1,32 @@
+function FindSequence {
+  local count=0
+  local executed=0
+  
+  while [[ $executed -lt $n ]]
+  do
+    local found=0
+    
+    for ((i=1; i<=n; i++))
+    do
+      if [[ ${sequence[$i]} -eq 0 ]]
+      then
+        CheckProcess $i
+        if [[ $? -eq 0 ]]
+        then
+          sequence[$i]=$i
+          UpdateAvailable $i
+          executed=$(($executed + 1))
+          found=1
+        fi
+      fi
+    done
+    
+    # If no process was found in this iteration, system is not in a safe state
+    if [[ $found -eq 0 ]]
+    then
+      return $executed
+    fi
+  done
+  
+  return $executed
+}
